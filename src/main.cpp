@@ -56,8 +56,9 @@ int main(int argc, char **argv)
 								{"insert", required_argument, nullptr, 'i'},
 								{"help", no_argument, nullptr, 'h'},
 								{"search", required_argument, nullptr, 's'},
+								{"count", no_argument, nullptr, 'c'},
 								{nullptr, 0, nullptr, '\0'}};
-	while ((option = getopt_long(argc, argv, "vpi:hs:", longOpts, &option_index)) != -1)
+	while ((option = getopt_long(argc, argv, "vpi:hs:c", longOpts, &option_index)) != -1)
 	{
 		switch (option)
 		{
@@ -134,12 +135,18 @@ int main(int argc, char **argv)
 			}
 			break;
 		}
+		case 'c': 
+		{
+			std::cout << map.size() << " apps sent\n";	
+			break;
+		}
 		default:
 		{
 			for (auto i = map.begin(); i != map.end(); ++i)
 			{
 				i->second.print();
 			}
+			std::cout << map.size() << " aps sent\n";
 			break;
 		}
 		}
