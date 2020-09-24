@@ -2,3 +2,4 @@ Smarkets|Software Engineer|Los Angeles|Thu Sep 24
 Target|Software Engineer|Minneapolis, MN|Mon Sep 21
 Blizzard|Software Engineering Internship|San Francisco/Austin|Thu Sep 24
 Instabase|Software Engineer, Frontend|San Francisco|Thu Sep 24
+Pintrest|Software Engineer|San Francisco|Thu Sep 24
