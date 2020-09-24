@@ -71,7 +71,9 @@ int main(int argc, char **argv)
 		{
 			for (auto i = map.begin(); i != map.end(); ++i)
 			{
-				i->second.print();
+				if(i->first.length() > 0) {
+					i->second.print();
+				}
 			}
 			break;
 		}
