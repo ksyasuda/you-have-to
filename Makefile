@@ -1,4 +1,4 @@
-BIN := main
+BIN := pls.exe
 
 CXXFLAGS := -std=c++17 -Wconversion -Wall -Werror -Wextra -pedantic -DNDEBUG -O3
 
@@ -16,4 +16,4 @@ debug: $(SRCS)
 
 .PHONY: clean all
 clean:
-	rm -rvf *.out *.exe main main_debug
+	rm -rvf *.out *.exe $(BIN) $(BIN)_debug
