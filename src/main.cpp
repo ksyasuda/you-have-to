@@ -4,6 +4,9 @@
 #include <fstream>
 #include <getopt.h>
 #include <set>
+#include <algorithm>
+#include <cctype>
+#include <locale>
 #include <cstring>
 #include "../headers/job.h"
 
@@ -23,6 +26,7 @@ static Job parseString(std::string line)
 	location = line.substr(count, name - count);
 	count = (int)name + 1;
 	name = line.find('|', count);
+	cout << "NAME " << name << endl;
 	if (name != std::string::npos)
 	{
 		std::cerr << "Something went wrong in map setup\n";
@@ -46,13 +50,15 @@ int main(int argc, char **argv)
 		std::cerr << "Something went wrong in main\n";
 	}
 	std::string line;
-	char enc;
-	in >> enc;
+	string enc;
+	getline(in, enc);
+	int cnt = 0;
 	while (std::getline(in, line))
 	{
 		// std::cout << line << "\n";
 		Job job = parseString(line);
 		map[job.get_company()] = job;
+		++cnt;
 	}
 	in.close();
 
@@ -189,16 +195,37 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
+
 static string encrypt(string& part) {
-	char key = 'F';
+	char key = 'G';
 	string word = part;
-	auto j = word.begin();
-	for(auto i = part.begin(); i != part.end(); ++i) {
-		if(*j != ' ' && *j != ',') {
-			*i = *j ^ key;	
-		}
+	auto j = part.begin();
+	for(auto i = word.begin(); i != word.end(); ++i) {
+		*j = *i ^ key;	
 		++j;
 	}
+	// trim(part);
+	cout << "PART " << part << endl;
+	cout << "LEN " << part.length() << endl;
 	return part;
 }
 
@@ -233,13 +260,16 @@ set<string> encrypt_decrypt(string type) {
 		count = pos + 1;
 		pos = line.find('|', count);
 		part = line.substr(count, pos - count);
+		// cout << "PART " << part << endl;
 		encrypt(part);
+		// cout << "ENCPART " << part << endl;
 		nline += '|' + part;
 		count = pos + 1;
 		pos = line.find('|', count);
 		part = line.substr(count, pos - count);
 		encrypt(part);
 		nline += '|' + part;
+		// cout << nline << endl;
 		set.insert(nline);
 	}
 	return set;
