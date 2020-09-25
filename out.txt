@@ -5,3 +5,7 @@ Instabase|Software Engineer, Frontend|San Francisco|Thu Sep 24
 Pintrest|Software Engineer|San Francisco|Thu Sep 24
 Roblox|Software Engineer|San Francisco|Thu Sep 24
 Verizon|Software Engineer I|Sunnyvale, CA|Thu Sep 24
+Clear Street|Software Engineer|New York|Thu Sep 24
+Orchard|Software Engineer|New York|Thu Sep 24
+Atolla|Software Engineer|New York|Thu Sep 24
+Pathrise|Software Engineer|New York|Thu Sep 24
