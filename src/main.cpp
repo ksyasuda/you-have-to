@@ -3,7 +3,11 @@
 #include <map>
 #include <fstream>
 #include <getopt.h>
+#include <set>
+#include <cstring>
 #include "../headers/job.h"
+
+using namespace std;
 
 static Job parseString(std::string line)
 {
@@ -21,7 +25,7 @@ static Job parseString(std::string line)
 	name = line.find('|', count);
 	if (name != std::string::npos)
 	{
-		std::cerr << "Something went wrong\n";
+		std::cerr << "Something went wrong in map setup\n";
 		exit(1);
 	}
 	date = line.substr(count, name - count);
@@ -31,15 +35,19 @@ static Job parseString(std::string line)
 
 void write_new_job(Job &new_job);
 
+set<string> encrypt_decrypt(string type);
+
 int main(int argc, char **argv)
 {
 	std::map<std::string, Job> map;
 	std::ifstream in("out.txt", std::ifstream::in);
 	if (!in.is_open())
 	{
-		std::cerr << "Something went wrong\n";
+		std::cerr << "Something went wrong in main\n";
 	}
 	std::string line;
+	char enc;
+	in >> enc;
 	while (std::getline(in, line))
 	{
 		// std::cout << line << "\n";
@@ -57,11 +65,35 @@ int main(int argc, char **argv)
 								{"help", no_argument, nullptr, 'h'},
 								{"search", required_argument, nullptr, 's'},
 								{"count", no_argument, nullptr, 'c'},
+								{"encrypt", no_argument, nullptr, 'e'},
+								{"decrpyt", no_argument, nullptr, 'd'},
 								{nullptr, 0, nullptr, '\0'}};
-	while ((option = getopt_long(argc, argv, "vpi:hs:c", longOpts, &option_index)) != -1)
+	while ((option = getopt_long(argc, argv, "vpi:hs:ced", longOpts, &option_index)) != -1)
 	{
 		switch (option)
 		{
+		case 'e': 
+		{
+			set<string> set;
+			set = encrypt_decrypt("e");
+			ofstream out ("out.txt");
+			out << "e\n";
+			for(auto i = set.begin(); i != set.end(); ++i) {
+				out << *i << "\n";
+			}
+			break;
+		}
+		case 'd':
+		{
+			set<string> set;
+			set = encrypt_decrypt("d");
+			ofstream out ("out.txt");
+			out << "d\n";
+			for(auto i = set.begin(); i != set.end(); ++i) {
+				out << *i << "\n";
+			}
+			break;
+		}
 		case 'h':
 			std::cout << "When in doubt, factor out\n";
 			exit(0);
@@ -144,7 +176,8 @@ int main(int argc, char **argv)
 		{
 			for (auto i = map.begin(); i != map.end(); ++i)
 			{
-				i->second.print();
+				if(i->first.length() > 0)
+					i->second.print();
 			}
 			std::cout << map.size() << " aps sent\n";
 			break;
@@ -154,6 +187,62 @@ int main(int argc, char **argv)
 	// out << name << "|" << type << "|" << date << "\n";
 	//! close the file
 	return 0;
+}
+
+static string encrypt(string& part) {
+	char key = 'F';
+	string word = part;
+	auto j = word.begin();
+	for(auto i = part.begin(); i != part.end(); ++i) {
+		if(*j != ' ' && *j != ',') {
+			*i = *j ^ key;	
+		}
+		++j;
+	}
+	return part;
+}
+
+set<string> encrypt_decrypt(string type) {
+	set<string> set;
+	ifstream in ("out.txt");
+	if(!in.is_open()) {
+		cerr << "Something went wrong opening output file\n";
+		exit(1);
+	}
+	string line;
+	string nline;
+	string enc;
+	//in >> enc;
+	getline(in, enc);
+	if(strcmp(enc.c_str(), type.c_str()) == 0) {
+		cerr << "You can't do that\n";
+		exit(1);
+	}
+	while(getline(in, line)) {
+		nline = "";
+		size_t count = 0;
+		size_t pos = line.find('|', count);
+		string part = line.substr(count, pos);
+		encrypt(part);
+		nline += part;
+		count = pos + 1;
+		pos = line.find('|', count);
+		part = line.substr(count, pos - count);
+		encrypt(part);
+		nline += '|' + part;
+		count = pos + 1;
+		pos = line.find('|', count);
+		part = line.substr(count, pos - count);
+		encrypt(part);
+		nline += '|' + part;
+		count = pos + 1;
+		pos = line.find('|', count);
+		part = line.substr(count, pos - count);
+		encrypt(part);
+		nline += '|' + part;
+		set.insert(nline);
+	}
+	return set;
 }
 
 void write_new_job(Job &new_job)
