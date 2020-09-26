@@ -53,6 +53,8 @@ Job parseString(std::string line);
 
 void write_new_job(Job &new_job, bool crypto);
 
+void print(map<string, Job>& map, bool need_decrypt, bool is_auth);
+
 bool checkUser();
 
 set<string> encrypt_decrypt(string type);
@@ -151,7 +153,9 @@ int main(int argc, char **argv)
 			out.close();
 			if(is_verbose) {
 				cout << "File write complete... Closing file\n";
+				cout << "Dumping content of decrypted file...\n";
 			}
+			print(map, need_decrypt, true);
 			break;
 		}
 		case 'h':
@@ -164,12 +168,13 @@ int main(int argc, char **argv)
 		case 'p': //! PRINT
 		{
 			bool is_auth = checkUser();
-			for (auto i = map.begin(); i != map.end(); ++i)
-			{
-				if(i->first.length() > 0) {
-					i->second.print(need_decrypt, is_auth);
-				}
-			}
+			//for (auto i = map.begin(); i != map.end(); ++i)
+			//{
+			//	if(i->first.length() > 0) {
+			//		i->second.print(need_decrypt, is_auth);
+			//	}
+			//}
+			print(map, need_decrypt, is_auth);
 			break;
 		}
 		case 'i':
@@ -271,11 +276,12 @@ int main(int argc, char **argv)
 		case 'c': 
 		{
 			bool is_auth = checkUser();
-			for (auto i = map.begin(); i != map.end(); ++i)
-			{
-				if(i->first.length() > 0)
-					i->second.print(need_decrypt, is_auth);
-			}
+			//for (auto i = map.begin(); i != map.end(); ++i)
+			//{
+			//	if(i->first.length() > 0)
+			//		i->second.print(need_decrypt, is_auth);
+			//}
+			print(map, need_decrypt, is_auth);
 			std::cout << map.size() << " aps sent\n";
 			break;
 		}
@@ -427,4 +433,14 @@ Job parseString(std::string line)
 	// if(need_decrypt) encrypt(date);
 	const Job job(cname, jname, location, date);
 	return job;
+}
+
+void print(map<string, Job>& map, bool need_decrypt, bool is_auth) 
+{
+	for (auto i = map.begin(); i != map.end(); ++i)
+    {
+    	if(i->first.length() > 0) {
+    		i->second.print(need_decrypt, is_auth);
+    	}
+    }
 }
