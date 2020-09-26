@@ -5,7 +5,6 @@
 #include <getopt.h>
 #include <set>
 #include <algorithm>
-// #include <cctype>
 #include <locale>
 #include <cstring>
 #include <termios.h>
@@ -177,7 +176,6 @@ int main(int argc, char **argv)
 		{
 			//* cast optarg to a string
 			std::string line = optarg;
-			// std::cout << line << '\n';
 			int count = 0;
 			std::string cname, jname, location, date;
 			std::size_t name = line.find('|', count);

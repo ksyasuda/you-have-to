@@ -9,7 +9,6 @@ class Job
 	std::string job_name;
 	std::string location;
 	std::string date_applied;
-
 public:
 	Job();
 
