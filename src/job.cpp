@@ -1,7 +1,14 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <locale>
+#include <cstring>
+#include <termios.h>
+#include <unistd.h>
+#include <fstream>
 #include "../headers/job.h"
+
+using namespace std;
 
 // trim from start (in place)
 static inline void ltrim(std::string &s) {
@@ -67,7 +74,7 @@ std::string Job::get_location()
 	return location;
 }
 
-void Job::print(bool crypto)
+void Job::print(bool crypto, bool is_authenticated)
 {
 	if(!crypto)
 	{
@@ -75,14 +82,16 @@ void Job::print(bool crypto)
 	}
 	else
 	{
-		std::string cname = company_name;
-		std::string jname = job_name;
-		std::string loc = location;
-		std::string date = date_applied;
-		encrypt(cname);
-		encrypt(jname);
-		encrypt(loc);
-		encrypt(date);
-		std::cout << "| " << cname << " | " << jname << " | " << loc << " | " << date << " |\n";
+		if(is_authenticated) {
+			std::string cname = company_name;
+			std::string jname = job_name;
+			std::string loc = location;
+			std::string date = date_applied;
+			encrypt(cname);
+			encrypt(jname);
+			encrypt(loc);
+			encrypt(date);
+			std::cout << "| " << cname << " | " << jname << " | " << loc << " | " << date << " |\n";
+		}
 	}
 }

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cp out.txt.bak out.txt
+cp .out.txt out.txt
 make -B
 ./pls.exe -e

@@ -162,12 +162,13 @@ int main(int argc, char **argv)
 			std::cout << "VERBOSE NICE\n";
 			is_verbose = true;
 			break;
-		case 'p':
+		case 'p': //! PRINT
 		{
+			bool is_auth = checkUser();
 			for (auto i = map.begin(); i != map.end(); ++i)
 			{
 				if(i->first.length() > 0) {
-					i->second.print(need_decrypt);
+					i->second.print(need_decrypt, is_auth);
 				}
 			}
 			break;
@@ -226,7 +227,6 @@ int main(int argc, char **argv)
 				*i = tolower(*i, loc);
 			}
 			Job job(cname, jname, location, date);
-			job.print(need_decrypt);
 			map[cname] = job;
 			write_new_job(job, need_decrypt);
 			if(is_verbose) {
@@ -272,17 +272,26 @@ int main(int argc, char **argv)
 		}
 		case 'c': 
 		{
-			std::cout << map.size() << " apps sent\n";	
+			bool is_auth = checkUser();
+			for (auto i = map.begin(); i != map.end(); ++i)
+			{
+				if(i->first.length() > 0)
+					i->second.print(need_decrypt, is_auth);
+			}
+			std::cout << map.size() << " aps sent\n";
 			break;
 		}
 		default:
 		{
-			for (auto i = map.begin(); i != map.end(); ++i)
-			{
-				if(i->first.length() > 0)
-					i->second.print(need_decrypt);
-			}
-			std::cout << map.size() << " aps sent\n";
+			// bool is_auth = checkUser();
+			// for (auto i = map.begin(); i != map.end(); ++i)
+			// {
+			// 	if(i->first.length() > 0)
+			// 		i->second.print(need_decrypt, is_auth);
+			// }
+			// std::cout << map.size() << " aps sent\n";
+			std::cerr << "ERROR: Invalid Argument\n";
+			exit(1);
 			break;
 		}
 		}
@@ -311,11 +320,12 @@ bool checkUser() {
 		encrypt(entered_password);
 		in >> password;
 		if(strcmp(entered_password.c_str(), password.c_str()) != 0) {
-			cerr << "Incorrect password goodbye\n";
+			cerr << "ERROR: Incorrect Password\n";
 			exit(1);
 		}
 		is_authenticated = true;
 	}
+	in.close();
 	return is_authenticated;
 }
 

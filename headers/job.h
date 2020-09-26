@@ -15,7 +15,7 @@ public:
 
 	Job(const std::string &cname, const std::string &jname, const std::string &location, const std::string &date);
 
-	void print(bool crypto);
+	void print(bool crypto, bool is_authenticated);
 
 	std::string get_company();
 
