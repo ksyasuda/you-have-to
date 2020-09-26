@@ -30,13 +30,13 @@ nothing else.</p>
 
 ### Command-Line Arguments
 
--   --verbose, -v Enable verbose output
--   --print, -p Print content of the file (requires password if encrypted)
--   --insert, -i Write a new job to the file
--   --help, -h Get a very useful help prompt
--   --search, -s Search for a job by job name
--   --count, -c Print content of the file and number of jobs (requires password if encryped)
--   --encrypt, -e Encrypt content of the file
--   --decrypt, -d Decrypt content of the file (requires password)
+-   `--verbose,` `-v` Enable verbose output
+-   `--print`, `-p` Print content of the file (requires password if encrypted)
+-   `--insert`, `-i` Write a new job to the file
+-   `--help`, `-h` Get a very useful help prompt
+-   `--search`, `-s` Search for a job by job name
+-   `--count`, `-c` Print content of the file and number of jobs (requires password if encryped)
+-   `--encrypt`, `-e` Encrypt content of the file
+-   `--decrypt`, `-d` Decrypt content of the file (requires password)
 
 ---
