@@ -418,7 +418,7 @@ void write_new_job(Job &new_job, bool crypto) {
     string date = new_job.get_date_applied();
     encrypt(date);
     // trim(date);
-    // out << cname << "|" << jname << "|" << loc << "|" << date << "\n";
+    out << cname << "|" << jname << "|" << loc << "|" << date << "\n";
   }
   out.close();
 }
