@@ -82,3 +82,5 @@ wolverine trading|software engineer|chicago|thu nov 19|-
 zanbato|software engineer|mountain view|sat nov 7|-
 zoom|devops engineer|san francisco|sun nov 1|-
 amplitude|software engineer intern|san francisco|10 jan 2021
+e.bit consulting|software engineer|chicago|11 jan 2021
+vmware|software enegineering intern|palo alto|11 jan 2021
