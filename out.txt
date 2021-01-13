@@ -31,7 +31,7 @@ greenpark sports|ull stack engineer|los angeles|mon nov 2|-
 himss|software engineer|denver|6 jan 2021|./+55
 hpr|software engineer|boston|5 jan 2021|.64
 instabase|software engineer, frontend|san francisco|thu sep 24|-
-jackbox games|software engineer|chicago|7 jan 2021|,'%-$)>f!'+#5
+jackbox games|software engineer|chicago|7 jan 2021|+
 jerry.ai|software engineer|san francisco|wed dec 30|,#44?h'/
 jpl|software engineer|los angeles|Fri oct 30|-
 jump trading|software engineering internship|chicago|thu nov 19|-
